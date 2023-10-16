@@ -1,0 +1,113 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <meta name="description" content="Personal Spotify Statistics.">
+    <title>(Your) Personal Spotify Statistics</title>
+    <link rel='icon' type='image/x-icon' href='assets/favicon.ico' />
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script defer src="index.js"></script>
+    <script defer src="https://cdn.plot.ly/plotly-basic-2.26.0.min.js"></script>
+    <script defer data-domain="piebro.github.io/spotify-statistics" src="https://plausible.io/js/script.js"></script>
+</head>
+
+<body onload="init()">
+    <h2>(Your) Personal Spotify Statistics</h2>
+    <div class="textDiv" style="padding-top: 0;" id="introductionText">
+        This is a very brief overview of my spotify stats. You can also <a href="javascript:void(0)" onclick="toggleBox('spotifyInfo')" role="button">create your own</a>. You can check out the code of this project, everything is <a href="https://github.com/piebro/spotify-stats">open source</a>.
+        <div id="spotifyInfo" class="infoBox">
+            <span id="closeBtn" onclick="toggleBox('spotifyInfo')" class="closeIcon">
+                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0" y1="0" x2="16" y2="16" stroke="#bbb" stroke-width="2"/>
+                    <line x1="16" y1="0" x2="0" y2="16" stroke="#bbb" stroke-width="2"/>
+                </svg>
+            </span>
+            <p>
+                You have to go to the <a href="https://www.spotify.com/us/account/privacy/">spotify account page</a> 
+                and request your "Extended streaming history". Once you downloaded it, you can return to this page and
+                upload your data clicking <a href="javascript:void(0)" id="uploadLink" onclick="document.getElementById('zipFile').click()" role="button">here</a>. Your data is only processed in your browser.
+                <input type="file" id="zipFile" accept=".zip" onchange="processUserData()" style="display: none;"/>
+            </p>
+        </div>
+        
+        <br>
+        <br>
+
+        <div class="tabs">
+            <button class="tablinks" onclick="openTabShowData(event)">basics</button>
+            <button class="tablinks" onclick="openTabShowData(event)">most played artists</button>
+            <button class="tablinks" onclick="openTabShowData(event)">most played songs</button>
+            <button class="tablinks" onclick="openTabShowData(event)">most played albums</button>
+            <button class="tablinks" onclick="openTabShowData(event)">most played per month</button>
+            <button class="tablinks" onclick="openTabShowData(event)">play time per day</button>
+    
+            <button class="tablinks" id="randomSampleButton" onclick="getRandomSample(event)" style="display: none;">get a random sample</button>
+            <button class="tablinks" id="advancedStatsButton" onclick="toggleBox('advancedStats')">advanced stats</button>
+            <button class="tablinks" id="filterDataBoxButton" onclick="toggleBox('filterDataBox')" style="display: none;">filter data</button>
+            <button class="tablinks" id="downloadDFButton" onclick="downloadDF()" style="display: none;">download as csv</button>
+
+            <br>
+            <div id="advancedStats" class="infoBox">
+
+                <span id="closeAdvancedBtn" onclick="toggleBox('advancedStats')" class="closeIcon">
+                    <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0" y1="0" x2="16" y2="16" stroke="#bbb" stroke-width="2"/>
+                        <line x1="16" y1="0" x2="0" y2="16" stroke="#bbb" stroke-width="2"/>
+                    </svg>
+                </span>
+                <br>
+                
+                <div class="tabs">
+                    <button class="tablinks" onclick="openTabShowData(event)">general</button>
+                    <button class="tablinks" onclick="openTabShowData(event)">songs of top artists</button>
+                    <button class="tablinks" onclick="openTabShowData(event)">most played songs clicked on</button>
+                    <button class="tablinks" onclick="openTabShowData(event)">countries</button>
+                    <button class="tablinks" onclick="openTabShowData(event)">average song length</button>
+                    <button class="tablinks" onclick="openTabShowData(event)">song stats</button>
+                    <button class="tablinks" onclick="openTabShowData(event)">unique and new played songs</button>
+                    <button class="tablinks" onclick="openTabShowData(event)">cumulative play count</button>
+                </div>
+            </div>
+
+
+
+            <div id="filterDataBox" class="infoBox" style="display: none;">
+                <span id="closeAdvancedBtn" onclick="toggleBox('filterDataBox')" class="closeIcon">
+                    <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0" y1="0" x2="16" y2="16" stroke="#bbb" stroke-width="2"/>
+                        <line x1="16" y1="0" x2="0" y2="16" stroke="#bbb" stroke-width="2"/>
+                    </svg>
+                </span>
+                <br>
+                
+                start date: <select id="startDate"></select>&nbsp;
+                end date: <select id="endDate"></select>&nbsp;
+                
+                <select id="changeTopKSelect">
+                    <option selected>Top-20</option>
+                    <option>Top-100</option>
+                    <option>Top-500</option>
+                    <option>All</option>
+                </select>&nbsp;
+
+                filter artists (optional):<input type="text" id="artistName" placeholder="artist name">&nbsp;
+
+                <button class="tablinks" onclick="filterData()">Submit</button>
+            </div>
+
+
+        </div>
+    </div>
+    <div id="data"></div>
+    <div class="textDiv" style="padding-top: 0; display: none" id="progressText"></div>
+    <div class="tabs">
+        <button class="tablinks" id="saveDataBtn">save data</button>
+        <button class="tablinks" id="saveImgBtn">save as image(s)</button>
+        <br><br><br>
+    </div>
+</body>
+
+</html>

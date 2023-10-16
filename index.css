@@ -1,0 +1,147 @@
+.sorting{
+	background:url("data:image/gif;base64,R0lGODlhCwALAJEAAAAAAP///xUVFf///yH5BAEAAAMALAAAAAALAAsAAAIUnC2nKLnT4or00PvyrQwrPzUZshQAOw==") no-repeat center right;
+  cursor:pointer;
+}
+
+.sortingAsc{
+	background:url("data:image/gif;base64,R0lGODlhCwALAJEAAAAAAP///xUVFf///yH5BAEAAAMALAAAAAALAAsAAAIRnC2nKLnT4or00Puy3rx7VQAAOw==") no-repeat center right;
+  cursor:pointer;
+}
+
+.sortingDesc{
+	background:url("data:image/gif;base64,R0lGODlhCwALAJEAAAAAAP///xUVFf///yH5BAEAAAMALAAAAAALAAsAAAIPnI+py+0/hJzz0IruwjsVADs=") no-repeat center right;
+  cursor:pointer;
+}
+
+
+table, th, td {
+  border:1px solid black;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+th, td {
+    padding: 7px 12px 0;
+}
+
+tr:nth-child(even){
+    background-color:#dfdfdf;
+}
+
+.textDiv {
+  text-align: justify;
+  width: 51%;
+  margin: 0 auto;
+  padding: 25px 0;
+}
+
+.dataDiv {
+    width: 51%;
+    aspect-ratio: 2/1;
+    padding: 25px 0;
+}
+
+body {
+    font-family: times;
+    font-size: 22px;
+    text-align: center;
+    height: 100%;
+    overflow: auto;
+}
+
+html {
+    overflow: hidden;
+    height: 100%;
+}
+
+select, button {
+    font-size: 16px;
+    max-width: 95%;
+}
+
+@media (width <= 1600px) {
+  .dataDiv {
+    width: 70%;
+  }
+
+  .textDiv {
+    width: 70%;
+  }
+}
+
+@media (width <= 1200px) {
+  .dataDiv {
+    width: 90%;
+  }
+
+  .textDiv {
+    width: 90%;
+  }
+}
+
+
+@media (width <= 800px) {
+  .dataDiv {
+    width: 98%
+  }
+
+  .textDiv {
+    width: 98%
+  }
+
+  body {
+    font-size: 16px;
+  } 
+}
+
+.highlight {
+  background-color: #d9d9d9;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.infoBox {
+  position: relative;
+  display: none;
+  border: 2px solid #bbb;
+  padding: 10px;
+  margin: 2px;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+#advancedStats {
+  margin-top: 20px;
+}
+
+
+.tablinks {
+  background-color: #dfdfdf;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  transition: 0.3s;
+  margin: 5px;
+}
+
+.tablinks:hover {
+  background-color: #cfcfcf;
+}
+
+.tablinks.active {
+  background-color: #bfbfbf;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}

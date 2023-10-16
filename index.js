@@ -679,7 +679,7 @@ async function processUserData() {
         await pyodide.runPythonAsync(`
             df = preprocess_df(df)
             original_df = df
-            top_k = 100
+            top_k = 20
         `);
 
         updateProgress('7/9: generate table and plot data');

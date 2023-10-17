@@ -51,35 +51,35 @@ basic_text = `
 <li>My top three songs are: <span class="highlight">{top_1_track}</span>, <span class="highlight">{top_2_track}</span> and <span class="highlight">{top_3_track}</span>.</li>
 <li>I listened to <span class="highlight">{played_songs}</span> songs in <span class="highlight">{listening_hours}</span> hours.</li>
 <li>I played <span class="highlight">{unique_artists_played}</span> unique artists and <span class="highlight">{unique_albums_played}</span> unique albums.</li>
-<li>I played a song <span class="highlight">{average_play_count_per_song}</span> times on average.</li>
-<li>I skipped <span class="highlight">{percent_of_skipped_songs}%</span> of all started songs and <span class="highlight">{percent_of_played_songs_using_shuffle}%</span> of all songs I listend to are played using shuffle</li>
+<li>On average, I played a song <span class="highlight">{average_play_count_per_song}</span> times.</li>
+<li>I skipped <span class="highlight">{percent_of_skipped_songs}%</span> of all started songs and <span class="highlight">{percent_of_played_songs_using_shuffle}%</span> of all songs I listened to were played using shuffle.</li>
 </ul>
 `;
 
 advanced_basic_text = `
 <ul>
-<li>My records begin at {first_day} and end at {last_day}. That are {number_of_days} days.</li>
-<li>I played songs on {number_of_days_with_tracks_played} days, which accounts for {percent_of_days_with_tracks_played}% of all days.</li>
-<li>I played {played_songs} songs, totalling {listening_hours} hours. That's on average about {played_songs_per_day} tracks or {listening_hours_per_day} hours per day.</li>
-<li>I have listend to {unique_tracks_played} unique songs, from {unique_artists_played} artists and {unique_albums_played} albums. That's on average about {unique_tracks_played_per_artist} songs per artist.</li>
-<li>I play a song on average {average_play_count_per_song} times.</li>
-<li>About {percent_of_played_songs_using_shuffle}% of all song I listend to are played using shuffle.</li>
-<li>I skipped {skipped_songs} songs. That's about {percent_of_skipped_songs}% of all songs I started.</li>
-<li>On average, I listen to a song for {avg_seconds_played_before_skipping} seconds before skipping it. Of the songs I skip, {percent_of_songs_skipped_before_3s}% are skipped within 3 seconds, while {percent_of_songs_skipped_after_30s}% are skipped after more than 30 seconds and {percent_of_songs_skipped_after_120s}% after more then 2 minutes.</li>
-<li>I skip {percent_of_skipped_songs_using_shuffle}% of all started songs when I use shuffle and {percent_of_skipped_songs_not_using_shuffle}% when I don't use shuffle.</li>
+<li>My records begin on {first_day} and end on {last_day}. That's a span of {number_of_days} days.</li>
+<li>I played songs on {number_of_days_with_tracks_played} days, which account for {percent_of_days_with_tracks_played}% of all days.</li>
+<li>I played {played_songs} songs, totaling {listening_hours} hours. That's an average of about {played_songs_per_day} tracks or {listening_hours_per_day} hours per day.</li>
+<li>I have listened to {unique_tracks_played} unique songs, from {unique_artists_played} artists and {unique_albums_played} albums. That's an average of about {unique_tracks_played_per_artist} songs per artist.</li>
+<li>I play a song, on average, {average_play_count_per_song} times.</li>
+<li>About {percent_of_played_songs_using_shuffle}% of all songs I listened to were played using shuffle.</li>
+<li>I skipped {skipped_songs} songs, which is about {percent_of_skipped_songs}% of all songs I started.</li>
+<li>On average, I listen to a song for {avg_seconds_played_before_skipping} seconds before skipping it. Of the songs I skip, {percent_of_songs_skipped_before_3s}% are skipped within 3 seconds, while {percent_of_songs_skipped_after_30s}% are skipped after more than 30 seconds and {percent_of_songs_skipped_after_120s}% after more than 2 minutes.</li>
+<li>I skip {percent_of_skipped_songs_using_shuffle}% of all started songs when using shuffle and {percent_of_skipped_songs_not_using_shuffle}% when not using shuffle.</li>
 <li>I started {percent_reason_start_forward_button}% of my songs because I clicked the forward button, {percent_reason_start_back_button}% because I clicked the back button, {percent_reason_start_trackdone}% because the previous song ended and {percent_reason_start_clickrow}% because I clicked on the song.</li>
-<li>I played {pecent_of_played_songs_using_incognito_mode}% of my songs using the incognito mode.</li>
+<li>I played {percent_of_played_songs_using_incognito_mode}% of my songs using incognito mode.</li>
 </ul>
 `;
 
 top_artists_and_songs_text = `
 <ul>
-<li>My top-10 artists contribute to {top_10_artist_play_count_percent}% of my played songs.</li>
-<li>My top-100 artists contribute to {top_100_artist_play_count_percent}% of my played songs.</li>
-<li>My top-500 artists contribute to {top_500_artist_play_count_percent}% of my played songs.</li>
-<li>My top-10 songs contribute to {top_10_track_play_count_percent}% of my played songs.</li>
-<li>My top-100 songs contribute to {top_100_track_play_count_percent}% of my played songs.</li>
-<li>My top-500 songs contribute to {top_500_track_play_count_percent}% of my played songs.</li>
+<li>My top 10 artists contribute to {top_10_artist_play_count_percent}% of my played songs.</li>
+<li>My top 100 artists contribute to {top_100_artist_play_count_percent}% of my played songs.</li>
+<li>My top 500 artists contribute to {top_500_artist_play_count_percent}% of my played songs.</li>
+<li>My top 10 songs contribute to {top_10_track_play_count_percent}% of my played songs.</li>
+<li>My top 100 songs contribute to {top_100_track_play_count_percent}% of my played songs.</li>
+<li>My top 500 songs contribute to {top_500_track_play_count_percent}% of my played songs.</li>
 </ul>
 `;
 

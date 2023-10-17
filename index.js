@@ -28,7 +28,7 @@ data_cache['basics_dict'] = {
     percent_reason_start_back_button: 4,
     percent_reason_start_trackdone: 37,
     percent_reason_start_clickrow: 10,
-    pecent_of_played_songs_using_incognito_mode: 0,
+    percent_of_played_songs_using_incognito_mode: 0,
     average_play_count_per_song: 4.7,
     percent_played_songs_reason_start_clickrow: 10,
     top_10_artist_play_count_percent: 20,

@@ -591,7 +591,7 @@ def get_single_values(df, df_dict):
     data["percent_reason_start_trackdone"] = round(len(df[df["reason_start"] == "trackdone"]) / len(df) * 100)
     data["percent_reason_start_clickrow"] = round(len(df[df["reason_start"] == "clickrow"]) / len(df) * 100)
 
-    data["pecent_of_played_songs_using_incognito_mode"] = round(
+    data["percent_of_played_songs_using_incognito_mode"] = round(
         df_full_play["incognito_mode"].sum() / played_songs * 100
     )
 

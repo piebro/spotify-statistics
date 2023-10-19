@@ -8,7 +8,9 @@ The data is processed with the `data_crunching.py` script to generate statistics
 
 ## Some thoughts about the data
 
-The last time I downloaded the data, I received multiple JSON files, each with a size of 10.5MB, containing my streaming history as one large JSON. The JSON consists of one long list of objects, with each object representing a listening log. Additionally, there is a PDF file that provides explanations for each data field in multiple languages. As of October 2023, the table looks like this:
+I downloaded my own data several times over the past few months without any issues. However, the last time I downloaded it, there was some missing data for the year 2017. For this time period, the reason_end data field consistently showed none instead of the actual reason why the song ended. If you notice anything unusual in your statistics, it might be because the Spotify data export was inaccurate, and I would recommend re-downloading your data.
+
+The data is divided into multiple JSON files, each approximately 10.5MB in size, containing the streaming history. This JSON is comprised of a lengthy list of objects, each representing a listening log. Additionally, there's a PDF file that offers explanations for each data field in various languages. As of October 2023, the table is structured as follows:
 
 | Technical Field                      | Contains                                                                                                                                                      |
 |--------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|

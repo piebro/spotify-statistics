@@ -135,16 +135,16 @@ def df_dict_to_df_json_dict(df_dict):
 
 
 def save_dataframe_dict(df_dict):
-    os.makedirs(os.path.join("assets", "data"), exist_ok=True)
+    os.makedirs(os.path.join("assets"), exist_ok=True)
     for name, df in df_dict.items():
         df.to_json(
-            os.path.join("assets", "data", f"{name}.json"), orient="split", index=False, indent=0, double_precision=2
+            os.path.join("assets", f"{name}.json"), orient="split", index=False, indent=0, double_precision=2
         )
 
 
 def save_json(data_name, data):
-    os.makedirs(os.path.join("assets", "data"), exist_ok=True)
-    with open(os.path.join("assets", "data", f"{data_name}.json"), "w") as f:
+    os.makedirs(os.path.join("assets"), exist_ok=True)
+    with open(os.path.join("assets", f"{data_name}.json"), "w") as f:
         json.dump(data, f, indent=2)
 
 

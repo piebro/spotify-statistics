@@ -47,7 +47,7 @@ Contributions to this project are welcome. Feel free to report bugs, suggest ide
 ## Developing
 
 ```bash
-# Create and activate a virtual environment for development
+# Create and activate a virtual environment for development (python>=3.8 ist needed)
 python -m venv .venv
 source .venv/bin/activate
 

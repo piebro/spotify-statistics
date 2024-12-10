@@ -13,12 +13,12 @@ def read_json(path_or_buf):
         path_or_buf,
         dtype={
             "ts": str,
-            "username": str,
+            # "username": str,
             "platform": str,
             "ms_played": np.int64,
             "conn_country": str,
             "ip_addr_decrypted": str,
-            "user_agent_decrypted": str,
+            # "user_agent_decrypted": str,
             "master_metadata_track_name": str,
             "master_metadata_album_artist_name": str,
             "master_metadata_album_album_name": str,
@@ -38,7 +38,7 @@ def read_json(path_or_buf):
     df = df.rename(
         columns={
             "ip_addr_decrypted": "ip_addr",
-            "user_agent_decrypted": "user_agent",
+            # "user_agent_decrypted": "user_agent",
             "master_metadata_track_name": "track",
             "master_metadata_album_artist_name": "artist",
             "master_metadata_album_album_name": "album",
@@ -87,8 +87,8 @@ def preprocess_df(df):
 
     df = df.drop(
         columns=[
-            "user_agent",
-            "username",
+            # "user_agent",
+            # "username",
             "ip_addr",
             "spotify_track_uri",
             "episode_name",

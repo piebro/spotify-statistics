@@ -173,7 +173,7 @@ async function loadData(data_name) {
     if (data_name in data_cache) {
         return data_cache[data_name];
     } else {
-        data_cache[data_name] = await fetch('assets/' + data_name + '.json').then((response) => {
+        data_cache[data_name] = await fetch('website/assets/' + data_name + '.json').then((response) => {
             return response.json();
         });
         return data_cache[data_name];
@@ -632,7 +632,7 @@ async function processUserData() {
         pyodide.globals.set('data', data);
 
         updateProgress('2/9: loading and starting code');
-        const response = await fetch('data_crunching.py');
+        const response = await fetch('website/data_crunching.py');
         const pythonCode = await response.text();
         await pyodide.runPythonAsync(pythonCode);
 

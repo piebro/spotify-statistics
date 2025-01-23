@@ -1,15 +1,24 @@
-[tool.black]
-line-length = 120
+[project]
+name = "spotify-statistics"
+version = "0.1.0"
+description = "Create statistics from your spotify listening history"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas",
+    "ruff",
+]
 
 [tool.ruff]
-select = ["E", "F"]
-ignore = []
-fixable = ["ALL"]
-unfixable = []
-exclude = [
-    ".git",
-    ".ruff_cache",
-    ".venv",
+select = [
+    "F",        # Pyflakes
+    "UP",       # pyupgrade
+    "B018",     # Found useless expression.
+    "I",        # isort
+    "RUF",      # ruff
 ]
-per-file-ignores = {}
-line-length = 120
+line-length = 110
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

@@ -48,25 +48,28 @@ Contributions to this project are welcome. Feel free to report bugs, suggest ide
 
 ## Developing
 
+[uv](https://docs.astral.sh/uv/getting-started/installation/) is used in the project to run Python.
+
 ```bash
-# Create and activate a virtual environment for development (python>=3.8 ist needed)
-python -m venv .venv
-source .venv/bin/activate
-
-# Install Python dependencies
-pip3 install -r requirements.txt
-
-# Use the script to create data
-python data_crunching.py path-to-unzipped-spotify-data-folder
+# Use the script to update the data in the folder website/assets
+uv run website/data_crunching.py "Path-To-Spotify-Extended-Streaming-History-Folder"
 
 # Run a simple Python server to view your stats in the browser
-python -m http.server 8000
+uv run -m http.server
 
 # Open http://0.0.0.0:8000/ in your browser
 ```
 
-The project uses the Python code formatter [Black](https://github.com/psf/black) and the linter [Ruff](https://github.com/astral-sh/ruff). Run `black .` and `ruff .` in the project directory before committing code.
-I also used [Prettier](https://prettier.io/playground/) for linting the `index.js` file with a `print-width` of 120, `tab-width` of 4, and using single quotes. Additionally, I used [Stylelint](https://stylelint.io/demo/) for linting the `index.css` file.
+### Formatting and linting
+
+The project uses the Python code formatter and linter [Ruff](https://github.com/astral-sh/ruff) for python.
+
+```bash
+uv run ruff check *.py --fix
+uv run ruff format *.py
+```
+
+[Prettier](https://prettier.io/playground/) is used for linting the `website/index.js` file with a `print-width` of 120, `tab-width` of 4, and using single quotes. Additionally, I used [Stylelint](https://stylelint.io/demo/) for linting the `website/index.css` file.
 
 
 ## Website Statistics

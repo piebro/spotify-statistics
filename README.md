@@ -42,6 +42,30 @@ I initially used the `ts` (timestamp) as my standard time reference, but I notic
 
 I'm unsure how Spotify determined if a song was `skipped`. I delved into the `ms_played` and `reason_end` data for `skipped` songs but couldn't make sense of it. For these statistics, a song is considered skipped if the reason for the song ending is the pressing of the forward button. A song is marked as fully played when the reason for the end of the song is `trackdone`.
 
+## Using the Spotify API
+
+1. Go to https://developer.spotify.com/dashboard/applications
+2. Click `Create an app`
+3. Enter a name and description
+4. Click `Create`
+5. Click `Edit settings`
+6. Click `Add new redirect URI` and enter `http://localhost:8888/callback`
+7. Click `Save`
+8. Copy the client ID and client secret
+9. Create a .env file with the following variables:
+    ```bash
+    SPOTIFY_CLIENT_ID=<spotify-client-id>
+    SPOTIFY_CLIENT_SECRET=<spotify-client-secret>
+    ```
+10. run `uv run src/update_spotify_bearer.py` to get the bearer token
+11. add the `SPOTIFY_BEARER_TOKEN` to the .env file. The token expires after 1 hour, so you need to run the script again to get a new token.
+
+
+```bash
+uv run src/create_db.py "Path-To-Spotify-Extended-Streaming-History-Folder"
+uv run src/get_spotify_data.py
+```
+
 ## Contributing
 
 Contributions to this project are welcome. Feel free to report bugs, suggest ideas or create merge requests.
@@ -65,8 +89,8 @@ uv run -m http.server
 The project uses the Python code formatter and linter [Ruff](https://github.com/astral-sh/ruff) for python.
 
 ```bash
-uv run ruff check *.py --fix
-uv run ruff format *.py
+uv run ruff check src/*.py --fix
+uv run ruff format src/*.py
 ```
 
 [Prettier](https://prettier.io/playground/) is used for linting the `website/index.js` file with a `print-width` of 120, `tab-width` of 4, and using single quotes. Additionally, I used [Stylelint](https://stylelint.io/demo/) for linting the `website/index.css` file.

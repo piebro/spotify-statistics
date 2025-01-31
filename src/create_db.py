@@ -60,16 +60,16 @@ def read_json(path_or_buf):
     df = df.rename(
         columns={
             "ip_addr_decrypted": "ip_addr",
-            "master_metadata_track_name": "track",
-            "master_metadata_album_artist_name": "artist",
-            "master_metadata_album_album_name": "album",
+            "master_metadata_track_name": "track_name",
+            "master_metadata_album_artist_name": "artist_name",
+            "master_metadata_album_album_name": "album_name",
         }
     )
     return df
 
 
 def preprocess_df(df):
-    df = df[df["track"] != "None"]
+    df = df[df["track_name"] != "None"]
     df = df.drop_duplicates()
 
     df["ts"] = pd.to_datetime(df["ts"], format="%Y-%m-%dT%H:%M:%SZ")
@@ -95,6 +95,9 @@ def preprocess_df(df):
     df = df.drop(
         columns=[
             "ip_addr",
+            "track_name",
+            "artist_name",
+            "album_name",
             "spotify_track_uri",
             "episode_name",
             "episode_show_name",
@@ -107,9 +110,6 @@ def preprocess_df(df):
     df = df[
         [
             "track_id",
-            "track",
-            "artist",
-            "album",
             "ts",
             "ms_played",
             "reason_start",

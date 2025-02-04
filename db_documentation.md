@@ -9,7 +9,6 @@ Contains detailed listening history from Spotify, including both streaming and o
 ### Columns:
 - `track_id` (string): Unique Spotify ID for the track
 - `artist_id` (string): ID of the primary artist
-- `album_id` (string): ID of the album containing the track
 - `ts` (datetime): Timestamp of when the track was played
 - `ms_played` (int32): Duration played in milliseconds
 - `reason_start` (string): How the track was started (e.g., "back button", "forward button", "play button")

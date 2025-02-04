@@ -21,7 +21,7 @@ class OAuthHandler(BaseHTTPRequestHandler):
         return
 
 
-def get_spotify_bearer():
+def get_spotify_refresh_token():
     # Get credentials from environment variables
     client_id = os.getenv("SPOTIFY_CLIENT_ID")
     client_secret = os.getenv("SPOTIFY_CLIENT_SECRET")
@@ -33,12 +33,12 @@ def get_spotify_bearer():
     server = HTTPServer(("localhost", 8888), OAuthHandler)
     server.authorization_code = None
 
-    # Prepare authorization URL
+    # Prepare authorization URL with offline_access scope
     auth_params = {
         "client_id": client_id,
         "response_type": "code",
         "redirect_uri": "http://localhost:8888/callback",
-        "scope": "user-read-playback-state user-modify-playback-state user-read-recently-played",
+        "scope": "user-read-playback-state user-modify-playback-state user-read-recently-played playlist-read-private playlist-modify-public playlist-modify-private",
     }
 
     # Open browser for user authorization
@@ -65,13 +65,14 @@ def get_spotify_bearer():
         },
     )
 
-    return response.json()["access_token"]
+    tokens = response.json()
+    return tokens["refresh_token"]
 
 
-def update_env_file(bearer_token):
+def update_env_file(refresh_token):
     env_path = os.path.join(os.path.dirname(__file__), "..", ".env")
 
-    # Read existing .env content<
+    # Read existing .env content
     env_content = {}
     if os.path.exists(env_path):
         with open(env_path) as f:
@@ -80,9 +81,8 @@ def update_env_file(bearer_token):
                     key, value = line.strip().split("=", 1)
                     env_content[key] = value.strip("\"'")
 
-    # Update or add the bearer token
-    env_content["SPOTIFY_BEARER_TOKEN"] = bearer_token
-    print(bearer_token)
+    # Add the refresh token
+    env_content["SPOTIFY_REFRESH_TOKEN"] = refresh_token
 
     # Write back to .env file
     with open(env_path, "w") as f:
@@ -92,8 +92,8 @@ def update_env_file(bearer_token):
 
 if __name__ == "__main__":
     try:
-        bearer_token = get_spotify_bearer()
-        update_env_file(bearer_token)
-        print("Bearer token has been updated in .env file")
+        refresh_token = get_spotify_refresh_token()
+        update_env_file(refresh_token)
+        print("Refresh token has been saved in .env file")
     except Exception as e:
         print(f"Error: {e}")

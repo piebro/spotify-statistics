@@ -1,13 +1,13 @@
 import argparse
 import json
-import os
 import time
 from pathlib import Path
 
 import pandas as pd
 import requests
-from dotenv import load_dotenv
 from tqdm import tqdm
+
+from util import get_spotify_bearer
 
 
 def fetch_data(url, headers, params=None):
@@ -104,9 +104,9 @@ def save_tracks_parquet(input_parquet, tracks_path, output_parquet):
             "track_name": "string",
             "track_duration_ms": "int64",
             "track_explicit": "bool",
-            "track_popularity": "int16",
-            "track_number": "int16",
-            "disc_number": "int16",
+            "track_popularity": "Int16",
+            "track_number": "Int16",
+            "disc_number": "Int16",
             "album_id": "string",
             "artist_id": "string",
             "artist_ids": "string",
@@ -115,8 +115,8 @@ def save_tracks_parquet(input_parquet, tracks_path, output_parquet):
 
     # Add album and artist IDs to listening history
     listening_history = pd.read_parquet(input_parquet)
-    listening_history.merge(df[["track_id", "artist_id", "album_id"]], on="track_id", how="left")[
-        ["track_id", "artist_id", "album_id"] + [col for col in listening_history.columns if col != "track_id"]
+    listening_history.merge(df[["track_id", "artist_id"]], on="track_id", how="left")[
+        ["track_id", "artist_id"] + [col for col in listening_history.columns if col != "track_id"]
     ].to_parquet(data_dir / "listening_history.parquet", index=False)
 
     df = df.drop(columns=["artist_id"])
@@ -248,12 +248,12 @@ def save_artists_parquet(artists_path, top_tracks_path, wikidata_path, output_pa
             artist = json.load(f)
 
             # Try to load top tracks data
-            top_tracks_file = top_tracks_path / f"{artist['id']}_top_tracks.json"
-            top_track_ids = []
-            if top_tracks_file.exists():
-                with open(top_tracks_file) as tf:
-                    top_tracks = json.load(tf)
-                    top_track_ids = [track["id"] for track in top_tracks]
+            # top_tracks_file = top_tracks_path / f"{artist['id']}_top_tracks.json"
+            # top_track_ids = []
+            # if top_tracks_file.exists():
+            #     with open(top_tracks_file) as tf:
+            #         top_tracks = json.load(tf)
+            #         top_track_ids = [track["id"] for track in top_tracks]
 
             # Load Wikidata
             wikidata_file = wikidata_path / f"{artist['id']}.json"
@@ -262,7 +262,7 @@ def save_artists_parquet(artists_path, top_tracks_path, wikidata_path, output_pa
             citizenship = None
             birth_date = None
             website = None
-            band = None
+            is_band = None
             all_genres = set(artist["genres"] if artist["genres"] else [])  # Start with Spotify genres
 
             if wikidata_file.exists():
@@ -276,7 +276,7 @@ def save_artists_parquet(artists_path, top_tracks_path, wikidata_path, output_pa
                             value_label = binding["valueLabel"]["value"]
                             if prop_label == "instance of":
                                 if value_label in ["human", "solo musical project"]:
-                                    band = False
+                                    is_band = False
                                 elif value_label in [
                                     "musical group",
                                     "musical duo",
@@ -289,7 +289,7 @@ def save_artists_parquet(artists_path, top_tracks_path, wikidata_path, output_pa
                                     "musical ensemble",
                                     "rap group",
                                 ]:
-                                    band = True
+                                    is_band = True
                             elif prop_label == "sex or gender":
                                 gender = value_label
                             elif prop_label == "country of citizenship":
@@ -308,9 +308,9 @@ def save_artists_parquet(artists_path, top_tracks_path, wikidata_path, output_pa
                 "artist_followers": artist["followers"]["total"],
                 "artist_genres": ";".join(sorted(all_genres)) if all_genres else "",
                 "artist_popularity": artist["popularity"],
-                "top_track_ids": ";".join(top_track_ids),
+                # "top_track_ids": ";".join(top_track_ids),
                 "wikidata_entity_id": wikidata_entity_id,
-                "band": band,
+                "is_band": is_band,
                 "gender": gender,
                 "citizenship": citizenship,
                 "birth_date": birth_date,
@@ -330,12 +330,12 @@ def save_artists_parquet(artists_path, top_tracks_path, wikidata_path, output_pa
         {
             "artist_id": "string",
             "artist_name": "string",
-            "artist_followers": "int32",
+            "artist_followers": "Int32",
             "artist_genres": "string",
-            "artist_popularity": "int64",
-            "top_track_ids": "string",
+            "artist_popularity": "Int64",
+            # "top_track_ids": "string",
             "wikidata_entity_id": "string",
-            "band": "boolean",
+            "is_band": "boolean",
             "gender": "string",
             "citizenship": "string",
             "website": "string",
@@ -401,10 +401,10 @@ def save_albums_parquet(albums_path, output_parquet):
             "album_id": "string",
             "album_name": "string",
             "album_type": "string",
-            "album_total_tracks": "int16",
-            "album_release_year": "int16",
+            "album_total_tracks": "Int16",
+            "album_release_year": "Int16",
             "album_label": "string",
-            "album_popularity": "int16",
+            "album_popularity": "Int16",
             "album_artist_ids": "string",
             "album_track_ids": "string",
         }
@@ -434,6 +434,22 @@ def download_album_images(albums_path, images_path):
     print("All album images downloaded")
 
 
+def save_listening_history_with_internet_data(data_dir, output_parquet):
+    df_tracks = pd.read_parquet(data_dir / "tracks.parquet")
+    df_albums = pd.read_parquet(data_dir / "albums.parquet")
+    df_artists = pd.read_parquet(data_dir / "artists.parquet")
+    df_history = pd.read_parquet(data_dir / "listening_history.parquet")
+    df_all = (
+        df_history
+            .merge(df_tracks, on='track_id', how='left')
+            .merge(df_albums, on='album_id', how='left')
+            .merge(df_artists, on='artist_id', how='left')
+    )
+    df_all["hours_played"] = df_all["ms_played"] / (1000 * 60 * 60)
+    df_all.to_parquet(output_parquet, index=False)
+    print(f"Created listening history with internet data parquet file at {output_parquet}")
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fetch Spotify data")
     parser.add_argument(
@@ -452,12 +468,7 @@ if __name__ == "__main__":
     artists_path = spotify_data_dir / "artists"
     top_tracks_path = spotify_data_dir / "top_tracks"
 
-    # Use token from environment variable and validate it
-    load_dotenv(root_dir / ".env", override=True)
-    token = os.getenv("SPOTIFY_BEARER_TOKEN")
-    if not token:
-        raise ValueError("SPOTIFY_BEARER_TOKEN must be set in .env file")
-
+    token = get_spotify_bearer()
     headers = {"Authorization": f"Bearer {token}"}
 
     save_raw_tracks_data(input_parquet, tracks_path, headers)
@@ -476,3 +487,4 @@ if __name__ == "__main__":
     save_albums_parquet(albums_path, data_dir / "albums.parquet")
     download_album_images(albums_path, data_dir / "album_images")
 
+    save_listening_history_with_internet_data(data_dir, data_dir / "listening_history_with_internet_data.parquet")

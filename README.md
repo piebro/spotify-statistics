@@ -57,13 +57,12 @@ I'm unsure how Spotify determined if a song was `skipped`. I delved into the `ms
     SPOTIFY_CLIENT_ID=<spotify-client-id>
     SPOTIFY_CLIENT_SECRET=<spotify-client-secret>
     ```
-10. run `uv run src/update_spotify_bearer.py` to get the bearer token
-11. add the `SPOTIFY_BEARER_TOKEN` to the .env file. The token expires after 1 hour, so you need to run the script again to get a new token.
+10. run `uv run src/add_refeshtoken_to_env.py` to add the spotify refresh token to the .env file
 
 
 ```bash
 uv run src/create_db.py "Path-To-Spotify-Extended-Streaming-History-Folder"
-uv run src/get_spotify_data.py
+uv run src/enrich_with_internet_data.py
 ```
 
 ## Contributing

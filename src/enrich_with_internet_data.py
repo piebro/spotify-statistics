@@ -102,7 +102,7 @@ def save_tracks_parquet(input_parquet, tracks_path, output_parquet):
         {
             "track_id": "string",
             "track_name": "string",
-            "track_duration_ms": "int64",
+            "track_duration_ms": "Int64",
             "track_explicit": "bool",
             "track_popularity": "Int16",
             "track_number": "Int16",
@@ -259,7 +259,7 @@ def save_artists_parquet(artists_path, top_tracks_path, wikidata_path, output_pa
             wikidata_file = wikidata_path / f"{artist['id']}.json"
             wikidata_entity_id = None
             gender = None
-            citizenship = None
+            citizenship_or_country_of_origin = None
             birth_date = None
             website = None
             is_band = None
@@ -292,8 +292,8 @@ def save_artists_parquet(artists_path, top_tracks_path, wikidata_path, output_pa
                                     is_band = True
                             elif prop_label == "sex or gender":
                                 gender = value_label
-                            elif prop_label == "country of citizenship":
-                                citizenship = value_label
+                            elif prop_label in ["country of citizenship", "country of origin"]:
+                                citizenship_or_country_of_origin = value_label
                             elif prop_label == "date of birth":
                                 birth_date = value_label
                             elif prop_label == "official website":
@@ -312,7 +312,7 @@ def save_artists_parquet(artists_path, top_tracks_path, wikidata_path, output_pa
                 "wikidata_entity_id": wikidata_entity_id,
                 "is_band": is_band,
                 "gender": gender,
-                "citizenship": citizenship,
+                "country": citizenship_or_country_of_origin,
                 "birth_date": birth_date,
                 "website": website,
             }
@@ -337,7 +337,7 @@ def save_artists_parquet(artists_path, top_tracks_path, wikidata_path, output_pa
             "wikidata_entity_id": "string",
             "is_band": "boolean",
             "gender": "string",
-            "citizenship": "string",
+            "country": "string",
             "website": "string",
         }
     )
@@ -481,10 +481,10 @@ if __name__ == "__main__":
     save_artists_parquet(
         artists_path, top_tracks_path, data_dir / "artist_wikidata", data_dir / "artists.parquet"
     )
-    download_artist_images(artists_path, data_dir / "artist_images")
+    # download_artist_images(artists_path, data_dir / "artist_images")
 
     save_raw_albums_data(albums_path, album_ids, headers)
     save_albums_parquet(albums_path, data_dir / "albums.parquet")
-    download_album_images(albums_path, data_dir / "album_images")
+    # download_album_images(albums_path, data_dir / "album_images")
 
     save_listening_history_with_internet_data(data_dir, data_dir / "listening_history_with_internet_data.parquet")

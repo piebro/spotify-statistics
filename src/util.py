@@ -52,7 +52,7 @@ def create_spotify_playlist(track_ids: list[str], playlist_name: str) -> str:
 
     Returns:
         str: URL of the created playlist
-    
+
     Raises:
         RuntimeError: If any API request fails
     """
@@ -71,20 +71,23 @@ def create_spotify_playlist(track_ids: list[str], playlist_name: str) -> str:
         json={"name": playlist_name, "public": False},
     )
     if not playlist_response.ok:
-        raise RuntimeError(f"Failed to create playlist: {playlist_response.status_code} - {playlist_response.text}")
+        raise RuntimeError(
+            f"Failed to create playlist: {playlist_response.status_code} - {playlist_response.text}"
+        )
     playlist_id = playlist_response.json()["id"]
 
     # Add tracks to playlist in batches of 100
     batch_size = 100
     for i in range(0, len(track_ids), batch_size):
-        batch = track_ids[i:i + batch_size]
+        batch = track_ids[i : i + batch_size]
         tracks_response = requests.post(
             f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks",
             headers=headers,
             json={"uris": [f"spotify:track:{track_id}" for track_id in batch]},
         )
         if not tracks_response.ok:
-            raise RuntimeError(f"Failed to add tracks: {tracks_response.status_code} - {tracks_response.text}")
+            raise RuntimeError(
+                f"Failed to add tracks: {tracks_response.status_code} - {tracks_response.text}"
+            )
 
     return f"https://open.spotify.com/playlist/{playlist_id}"
-

@@ -13,7 +13,7 @@ Contains detailed listening history from Spotify, including both streaming and o
 - `ms_played` (int32): Duration played in milliseconds
 - `reason_start` (string): How the track was started (e.g., "back button", "forward button", "play button")
 - `reason_end` (string): How the track ended (e.g., "trackdone", "back button", "forward button", "end play")
-- `full_play` (boolean): Whether the track was played to completion
+- `full_play` (boolean): Whether the track was played to completion, which is the case if reason_end is "end play"
 - `conn_country` (string): Country code where the track was played
 - `platform` (string): Device/platform used for playback
 - `shuffle` (boolean): Whether shuffle mode was enabled
